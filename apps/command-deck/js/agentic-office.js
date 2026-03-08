@@ -1016,7 +1016,7 @@
   }
 
   function ensureRuntime() {
-    if (window.__balaOfficeRuntime) return window.__balaOfficeRuntime;
+    if (window.__agenticOfficeRuntime) return window.__agenticOfficeRuntime;
 
     const stage = document.getElementById("virtual-office-stage");
     const wrap = document.getElementById("bo-wrap");
@@ -1167,7 +1167,7 @@
       runtime.controlsBound = true;
     }
 
-    window.__balaOfficeRuntime = runtime;
+    window.__agenticOfficeRuntime = runtime;
     return runtime;
   }
 
@@ -1337,10 +1337,10 @@
     return true;
   }
 
-  window.BalaOfficeUI = {
+  window.AgenticOfficeUI = {
     render,
     command,
   };
 
-  window.dispatchBalaOfficeCommand = command;
+  window.dispatchAgenticOfficeCommand = command;
 })();

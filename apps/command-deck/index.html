@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/dashboard.css" />
   <script src="js/lib/morphdom.min.js"></script>
   <script src="js/i18n.js"></script>
-  <script src="js/bala-office.js"></script>
+  <script src="js/agentic-office.js"></script>
   <!-- Shared Sidebar Loader -->
   <script src="js/sidebar.js"></script>
 </head>
@@ -348,13 +348,13 @@
       <div class="section" id="virtual-office-section">
         <div class="section-header">
           <div class="section-title">
-            🏢 Bala's Agentic Office
+            🏢 Agentic Office
             <span class="section-count" id="virtual-office-count">0</span>
           </div>
         </div>
         <div class="virtual-office-wrap">
           <div class="virtual-office-stage" id="virtual-office-stage">
-            <div class="office-title">Bala's Agentic Office</div>
+            <div class="office-title">Agentic Office</div>
             <div class="office-floor-hint">Supervisor on top layer, specialist agents on lower layer</div>
             <div class="bo-wrap" id="bo-wrap">
               <div class="bo-frame" id="bo-frame">
@@ -368,7 +368,7 @@
             </div>
           </div>
           <aside class="virtual-office-activity" id="virtual-office-activity">
-            <div class="activity-title">Bala's Agentic Office Activity</div>
+            <div class="activity-title">Agentic Office Activity</div>
             <div id="virtual-office-activity-list">
               <div class="activity-empty">No active events yet</div>
             </div>
@@ -3890,8 +3890,8 @@
       const countEl = document.getElementById("virtual-office-count");
       if (countEl) countEl.textContent = String(Array.isArray(agents) ? agents.length : 0);
 
-      if (window.BalaOfficeUI && typeof window.BalaOfficeUI.render === "function") {
-        window.BalaOfficeUI.render(Array.isArray(agents) ? agents : [], {
+      if (window.AgenticOfficeUI && typeof window.AgenticOfficeUI.render === "function") {
+        window.AgenticOfficeUI.render(Array.isArray(agents) ? agents : [], {
           meta: AGENT_META,
           providerClass: PROVIDER_CLASS,
         });
