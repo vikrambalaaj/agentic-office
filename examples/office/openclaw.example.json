@@ -1,0 +1,81 @@
+{
+  "browser": {
+    "defaultProfile": "chrome"
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "~/agentic-office/workspace-main",
+      "heartbeat": {
+        "every": "55m"
+      },
+      "subagents": {
+        "maxConcurrent": 8,
+        "maxSpawnDepth": 2
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "default": true,
+        "name": "NTR",
+        "workspace": "~/agentic-office/workspace-main",
+        "subagents": {
+          "allowAgents": [
+            "newsletter",
+            "video",
+            "calendar",
+            "monitor",
+            "appbuilder",
+            "browser"
+          ]
+        }
+      },
+      {
+        "id": "newsletter",
+        "name": "Narada",
+        "workspace": "~/agentic-office/workspace-newsletter"
+      },
+      {
+        "id": "video",
+        "name": "Maya",
+        "workspace": "~/agentic-office/workspace-video"
+      },
+      {
+        "id": "calendar",
+        "name": "Chitragupta",
+        "workspace": "~/agentic-office/workspace-calendar"
+      },
+      {
+        "id": "monitor",
+        "name": "Sudarshan",
+        "workspace": "~/agentic-office/workspace-monitor"
+      },
+      {
+        "id": "appbuilder",
+        "name": "Vishvakarma",
+        "workspace": "~/agentic-office/workspace-appbuilder"
+      },
+      {
+        "id": "browser",
+        "name": "Anvesha",
+        "workspace": "~/agentic-office/workspace-browser"
+      }
+    ]
+  },
+  "tools": {
+    "agentToAgent": {
+      "enabled": true
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "${TELEGRAM_BOT_TOKEN}"
+    },
+    "whatsapp": {
+      "selfChatMode": true,
+      "groupPolicy": "allowlist"
+    }
+  }
+}

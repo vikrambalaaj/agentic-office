@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Control — OpenClaw</title>
+  <meta name="description" content="Real-time monitoring dashboard for OpenClaw gateway, channels, and agents." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">🦞</div>
+        <div>
+          <h1>Mission Control</h1>
+          <div class="sub">OpenClaw <span id="version">—</span></div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="live-clock" id="clock">--:--:--</div>
+        <div class="connection-badge disconnected" id="conn-badge">
+          <span class="status-dot off"></span>
+          <span id="conn-text">Connecting</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Row -->
+    <div class="grid grid-4" id="stats-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Gateway</span>
+          <span class="card-icon">⚡</span>
+        </div>
+        <div class="stat-value gradient" id="gw-status">—</div>
+        <div class="stat-label" id="gw-pid">PID —</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Latency</span>
+          <span class="card-icon">📡</span>
+        </div>
+        <div class="stat-value" id="gw-latency">—</div>
+        <div class="stat-label">Gateway response</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Channels</span>
+          <span class="card-icon">💬</span>
+        </div>
+        <div class="stat-value gradient" id="channels-count">—</div>
+        <div class="stat-label" id="channels-summary">Loading…</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Agents</span>
+          <span class="card-icon">🤖</span>
+        </div>
+        <div class="stat-value gradient" id="agents-count">—</div>
+        <div class="stat-label" id="agents-summary">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Channels -->
+    <div class="section">
+      <div class="section-title"><span class="icon">📡</span> Channels</div>
+      <div class="grid grid-2" id="channels-grid">
+        <!-- WhatsApp Card -->
+        <div class="card channel-card whatsapp">
+          <div class="card-header">
+            <span class="card-title">WhatsApp</span>
+            <span class="card-icon">📱</span>
+          </div>
+          <div class="channel-status">
+            <span class="status-dot off" id="wa-dot"></span>
+            <span class="channel-status-text" id="wa-status">—</span>
+          </div>
+          <div class="channel-detail"><span class="label">Number</span><span id="wa-number">—</span></div>
+          <div class="channel-detail"><span class="label">Mode</span><span id="wa-mode">—</span></div>
+          <div class="channel-detail"><span class="label">Allow</span><span id="wa-allow">—</span></div>
+        </div>
+
+        <!-- Telegram Card -->
+        <div class="card channel-card telegram">
+          <div class="card-header">
+            <span class="card-title">Telegram</span>
+            <span class="card-icon">✈️</span>
+          </div>
+          <div class="channel-status">
+            <span class="status-dot off" id="tg-dot"></span>
+            <span class="channel-status-text" id="tg-status">—</span>
+          </div>
+          <div class="channel-detail"><span class="label">Bot</span><span id="tg-bot">—</span></div>
+          <div class="channel-detail"><span class="label">Token</span><span id="tg-token">—</span></div>
+          <div class="channel-detail"><span class="label">Accounts</span><span id="tg-accounts">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Info -->
+    <div class="section">
+      <div class="section-title"><span class="icon">🖥️</span> System</div>
+      <div class="card">
+        <table class="info-table" id="sys-table">
+          <tr><td>OS</td><td id="sys-os">—</td></tr>
+          <tr><td>Node</td><td id="sys-node">—</td></tr>
+          <tr><td>Config</td><td id="sys-config">—</td></tr>
+          <tr><td>Gateway</td><td id="sys-gateway">—</td></tr>
+          <tr><td>Dashboard</td><td id="sys-dashboard">—</td></tr>
+          <tr><td>Tailscale</td><td id="sys-tailscale">—</td></tr>
+          <tr><td>Skills</td><td id="sys-skills">—</td></tr>
+          <tr><td>Update</td><td id="sys-update">—</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Agents -->
+    <div class="section">
+      <div class="section-title"><span class="icon">🤖</span> Agents</div>
+      <div id="agents-list">
+        <div class="agent-row">
+          <div class="agent-avatar">M</div>
+          <div class="agent-info">
+            <div class="agent-name" id="agent-name">—</div>
+            <div class="agent-meta" id="agent-meta">Loading…</div>
+          </div>
+          <div class="agent-stats">
+            <div class="agent-stat"><span class="status-dot off" id="agent-dot"></span><span id="agent-bootstrap">—</span></div>
+            <div class="agent-stat">📋 <span id="agent-sessions">—</span></div>
+            <div class="agent-stat">🕐 <span id="agent-active">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section">
+      <div class="section-title"><span class="icon">⚡</span> Quick Actions</div>
+      <div class="actions-row">
+        <button class="btn btn-primary" id="btn-refresh" onclick="refreshStatus()">
+          <span class="icon">🔄</span> Refresh Status
+        </button>
+        <button class="btn" id="btn-dashboard" onclick="openDashboard()">
+          <span class="icon">🌐</span> Open Dashboard
+        </button>
+        <button class="btn" id="btn-restart" onclick="restartGateway()">
+          <span class="icon">🔁</span> Restart Gateway
+        </button>
+        <button class="btn btn-danger" id="btn-stop" onclick="stopGateway()">
+          <span class="icon">⏹️</span> Stop Gateway
+        </button>
+      </div>
+    </div>
+
+    <!-- Logs -->
+    <div class="section">
+      <div class="section-title"><span class="icon">📄</span> Live Logs</div>
+      <div class="log-panel">
+        <div class="log-header">
+          <div class="log-tabs">
+            <button class="log-tab active" data-tab="stdout" onclick="switchLogTab('stdout', this)">stdout</button>
+            <button class="log-tab" data-tab="stderr" onclick="switchLogTab('stderr', this)">stderr</button>
+          </div>
+          <button class="btn" style="padding: 6px 12px; font-size: 0.75rem;" onclick="refreshLogs()">
+            <span class="icon">🔄</span> Refresh
+          </button>
+        </div>
+        <div class="log-content" id="log-content">
+          <div class="log-line"><span class="timestamp">--</span> Waiting for data…</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
