@@ -1,34 +1,24 @@
 {
-  "name": "agentic-office",
-  "version": "1.2.0",
-  "description": "Agentic Office dashboard and example multi-agent office structure for OpenClaw",
+  "name": "bala-agentic-office",
+  "version": "1.0.0",
+  "description": "Bala Agentic Office dashboard and agent fleet starter for OpenClaw",
+  "private": false,
   "main": "core/server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node core/server.js",
     "dev": "node --watch core/server.js",
     "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint lib/ tests/",
-    "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint lib/ tests/ --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "echo 'Ready to spawn Overlords 🦞'"
+    "lint": "node --check core/config.js && node --check core/server.js && node --check apps/bala-office/js/fleet-visualizer.js && node --check apps/bala-office/js/dashboard.js && node --check lib/server.js"
   },
   "keywords": [
-    "ai",
-    "agent",
-    "dashboard",
     "agentic-office",
-    "monitoring",
-    "claude",
-    "chatgpt",
-    "llm",
+    "openclaw",
     "multi-agent",
-    "office",
-    "openclaw"
+    "dashboard",
+    "office"
   ],
-  "author": "Vikrambala",
+  "author": "vikrambala",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -37,13 +27,5 @@
   "bugs": {
     "url": "https://github.com/vikrambalaaj/agentic-office/issues"
   },
-  "homepage": "https://github.com/vikrambalaaj/agentic-office#readme",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.4"
-  }
+  "homepage": "https://github.com/vikrambalaaj/agentic-office#readme"
 }

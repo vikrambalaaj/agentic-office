@@ -1,27 +1,18 @@
-# Agentic Office
+# Bala Agentic Office
 
-English | [简体中文](README.zh-CN.md)
+An open-source office dashboard and starter structure for a named OpenClaw agent fleet.
 
-An open-source control plane for running a named multi-agent office on top of OpenClaw.
+This repo now contains only the Bala Agentic Office slice:
+- Bala office dashboard
+- agent fleet view
+- office activity visualization
+- direct instruction box
+- sanitized agent workspaces and `SOUL.md` examples
 
-This repo combines:
-- a real-time dashboard for sessions, memory, jobs, cost, and vitals
-- a sanitized example office layout with named agents, `SOUL.md` files, and workspace structure
+It intentionally excludes the inherited dashboard extras such as session analytics, cost dashboards, scheduled-job panels, and alternate UI surfaces.
 
-The goal is to help you run an office, not just a single assistant.
+## Fleet
 
-## What Is Inside
-
-The runtime is organized as a multi-surface workspace:
-- `core/` is the backend control plane
-- `apps/command-deck/` is the main dashboard
-- `apps/mission-room/` is an alternate mission-style interface
-- `examples/office/` shows how to structure a named multi-agent office
-- `lib/` keeps compatibility wrappers for older commands
-
-## Example Office
-
-The included example office uses these agents:
 - `NTR` — orchestrator and supervisor
 - `Narada` — newsletter and intelligence
 - `Maya` — video production
@@ -30,95 +21,60 @@ The included example office uses these agents:
 - `Vishvakarma` — app builder
 - `Anvesha` — browser research
 
-Each agent has its own workspace identity layer built around:
-- `SOUL.md`
-- `AGENTS.md`
-- `USER.md`
-- `TOOLS.md`
-- `HEARTBEAT.md`
-- `MEMORY.md`
-- `memory/YYYY-MM-DD.md`
-
-Start with the examples in `examples/office/`.
-
-## Folder Structure
+## Repo Layout
 
 ```text
 agentic-office/
-├── core/                      # Runtime control plane (Node backend)
-├── apps/
-│   ├── command-deck/          # Main dashboard UI
-│   └── mission-room/          # Alternate mission-style surface
-├── config/                    # Example/local config files
-├── docs/                      # Architecture and usage notes
-├── examples/
-│   └── office/                # Sanitized multi-agent office template
-├── lib/                       # Backward-compatibility wrappers
-├── scripts/                   # Start/stop/check helpers
-└── tests/                     # Node test suite
+├── apps/bala-office/          # Bala Agentic Office UI
+├── core/                      # Small office-focused API server
+├── examples/office/           # Sanitized agent fleet + workspace files
+├── lib/server.js              # Compatibility wrapper
+├── scripts/                   # Start and stop helpers
+└── tests/                     # Minimal config/server tests
 ```
 
 ## Quick Start
 
 ```bash
-npm ci
-cp config/dashboard.example.json config/dashboard.local.json
+npm install
 npm test
 npm start
 ```
 
-Default URL: `http://localhost:3333`
+Open `http://localhost:3333`
 
-Direct run:
+## Environment
 
-```bash
-node core/server.js
-```
-
-## Common Commands
-
-```bash
-npm start
-npm run dev
-npm test
-npm run lint
-./scripts/start.sh
-./scripts/stop.sh
-```
-
-## Configuration
-
-Key environment variables:
 - `PORT` default `3333`
-- `OPENCLAW_PROFILE`
-- `OPENCLAW_WORKSPACE`
-- `DASHBOARD_AUTH_MODE` as `none`, `token`, `tailscale`, `cloudflare`, or `allowlist`
-- `DASHBOARD_TOKEN` when auth mode is `token`
+- `AGENTIC_OFFICE_NAME` default `Bala Agentic Office`
+- `OPENCLAW_CONFIG_PATH` optional explicit OpenClaw config path
+- `OPENCLAW_BINARY` optional explicit OpenClaw binary path
 
-Example:
+If no live OpenClaw config is found, the server falls back to `examples/office/openclaw.example.json`.
 
-```bash
-OPENCLAW_WORKSPACE=~/.openclaw/workspace DASHBOARD_AUTH_MODE=tailscale node core/server.js
+## Workspace Shape
+
+Each office workspace follows the same pattern:
+
+```text
+workspace-<agent>/
+├── SOUL.md
+├── AGENTS.md
+├── USER.md
+├── TOOLS.md
+├── HEARTBEAT.md
+├── MEMORY.md
+└── memory/YYYY-MM-DD.md
 ```
 
-## API Surface
+## API
 
-Primary endpoints:
 - `GET /api/health`
-- `GET /api/state`
-- `GET /api/sessions`
-- `GET /api/vitals`
-- `GET /api/llm-usage`
-- `GET /api/cron`
-- `GET /api/events`
+- `GET /api/about`
+- `GET /api/office-state`
+- `POST /api/instruction`
 
-## Security
+## Notes
 
-- no personal tokens or channel IDs are bundled in this repository
-- local/private files remain excluded via `.gitignore`
-- `scripts/checks/no-secrets.sh` is included for basic secret scanning
-- `examples/office/openclaw.example.json` is sanitized and env-first
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+- The office visualization is kept intentionally playful, but the API is small and practical.
+- The example office files are sanitized. No real tokens, IDs, or private channels are bundled.

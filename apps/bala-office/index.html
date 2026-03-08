@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bala Agentic Office</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/office.css" />
+  <script defer src="js/fleet-visualizer.js"></script>
+  <script defer src="js/dashboard.js"></script>
+</head>
+
+<body class="office-shell">
+  <main class="office-page">
+    <section class="office-hero">
+      <div>
+        <div class="office-kicker">BALA AGENTIC OFFICE</div>
+        <h1 class="office-heading">One office. One fleet. Bala only.</h1>
+        <p class="office-copy">
+          This build contains only the Bala Agentic Office layer: the agent fleet, the office visualization,
+          the workspace structure, and a direct instruction path into OpenClaw.
+        </p>
+      </div>
+      <div class="office-summary" id="office-summary"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">Direct Instruction</div>
+      </div>
+      <div class="instruction-box">
+        <div class="instruction-row">
+          <label class="instruction-field">
+            <span>Agent</span>
+            <select id="instruction-agent"></select>
+          </label>
+          <label class="instruction-field">
+            <span>Thinking</span>
+            <select id="instruction-thinking">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label class="instruction-check">
+            <input id="instruction-deliver" type="checkbox" />
+            <span>Deliver reply</span>
+          </label>
+        </div>
+        <textarea id="instruction-message" class="instruction-textarea"
+          placeholder="Send a direct instruction to the selected Bala office agent..."></textarea>
+        <div class="instruction-actions">
+          <button class="quick-action-btn" id="instruction-send-btn" type="button">Send Instruction</button>
+        </div>
+        <pre id="instruction-output" class="instruction-output hidden"></pre>
+      </div>
+    </section>
+
+    <section class="section" id="agents-fleet-section">
+      <div class="section-header">
+        <div class="section-title">Agents Fleet <span class="section-count" id="agents-fleet-count">0</span></div>
+      </div>
+      <div class="card-grid fleet-grid" id="agents-fleet-grid"></div>
+    </section>
+
+    <section class="section" id="virtual-office-section">
+      <div class="section-header">
+        <div class="section-title">Bala Agentic Office</div>
+      </div>
+      <div class="virtual-office-wrap">
+        <div class="virtual-office-stage" id="virtual-office-stage">
+          <div class="office-title">Bala Agentic Office</div>
+          <div class="office-floor-hint">NTR supervises from the upper tier. Specialists operate below.</div>
+          <div class="bo-wrap" id="bo-wrap">
+            <div class="bo-frame" id="bo-frame">
+              <div class="bo-room" id="bo-room">
+                <canvas class="bo-canvas" id="bo-canvas"></canvas>
+                <svg class="bo-lines" id="bo-lines"></svg>
+                <div class="bo-overlay" id="bo-overlay"></div>
+              </div>
+            </div>
+            <div class="bo-scroll-fade"></div>
+          </div>
+        </div>
+        <aside class="virtual-office-activity" id="virtual-office-activity">
+          <div class="activity-title">Fleet Activity</div>
+          <div id="virtual-office-activity-list">
+            <div class="activity-empty">Loading office state...</div>
+          </div>
+          <div class="bo-control-wrap">
+            <div class="bo-control-head">
+              <span>Office Controls</span>
+              <button class="bo-mode-toggle" id="bo-mode-toggle" type="button">Auto</button>
+            </div>
+            <div class="bo-control-grid" id="bo-control-grid"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">Workspace Structure</div>
+      </div>
+      <div class="structure-panel">
+        <div class="structure-meta" id="structure-meta"></div>
+        <pre class="structure-code" id="structure-code"></pre>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

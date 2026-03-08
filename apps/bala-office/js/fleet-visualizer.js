@@ -1197,19 +1197,18 @@
     const rows = runtime.rawAgents.map((raw) => {
       const entity = runtime.entities.find((a) => a.id === raw.id);
       const meta = runtime.metaById[raw.id] || {};
-      const providerClass = runtime.providerClassByName[raw.providerName] || "";
       const state = entity ? entity.state : "idle";
-      const live = raw.stats?.live || 0;
-      const total = raw.stats?.total || 0;
       const role = roleLabel(raw);
       const stateLabel = state.charAt(0).toUpperCase() + state.slice(1);
+      const workspace = raw.workspaceLabel || raw.workspace || "workspace";
+      const soulExcerpt = raw.soulExcerpt || "";
 
       return `
         <div class="activity-row">
           <span class="activity-dot" style="background:${meta.color || "#8b949e"}"></span>
           <span class="activity-agent">${esc(raw.name)} - <span class="activity-agent-role">${esc(role)}</span></span>
-          <span class="activity-provider ${esc(providerClass)}">${esc(raw.providerName || "Unknown")}</span>
-          <span class="activity-state">${esc(stateLabel)} • ${live} live • ${total} total</span>
+          <span class="activity-provider">${esc(workspace)}</span>
+          <span class="activity-state" title="${esc(soulExcerpt)}">${esc(stateLabel)}${soulExcerpt ? ` • ${esc(soulExcerpt)}` : ""}</span>
         </div>
       `;
     });
@@ -1337,10 +1336,10 @@
     return true;
   }
 
-  window.AgenticOfficeUI = {
+  window.BalaFleetUI = {
     render,
     command,
   };
 
-  window.dispatchAgenticOfficeCommand = command;
+  window.dispatchBalaFleetCommand = command;
 })();
